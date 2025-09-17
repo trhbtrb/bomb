@@ -1,287 +1,392 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Mobile UI – Login • Sign Up • Home (Figma-ready)</title>
-  <style>
-    /* ===== Color Palette (from your swatch) ===== */
-    :root{
-      --apricot:#FFC5A6;    /* FFC5A6 */
-      --melon:#FDAC98;      /* FDAC98 */
-      --light-coral:#DC8E90;/* DC8E90 */
-      --mauve:#A97882;      /* A97882 */
-      --davy:#58545F;       /* 58545F */
-    }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Figma Boards — Login • Sign Up • Dashboard • Reset • Profile (Blue System + Copy)</title>
+<style>
+  /* ===== Brand Palette (from your image) ===== */
+  :root{
+    --navy:#03254c;   /* deep */
+    --blue1:#1167b1;  /* royal */
+    --blue2:#187bcd;  /* mid */
+    --blue3:#2a9df4;  /* sky */
+    --ice:#d0efff;    /* light */
+    --ink:#0b1320;
+    --muted:#6b7a90;
+    --white:#ffffff;
+  }
 
-    /* Reset */
-    *{margin:0;padding:0;box-sizing:border-box}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Inter,sans-serif;
+    background:linear-gradient(135deg,var(--navy) 0%,var(--blue1) 25%,var(--blue2) 50%,var(--blue3) 75%,var(--ice) 100%);
+    min-height:100vh;display:flex;align-items:center;justify-content:center;
+    padding:40px;overflow:auto;color:var(--navy)
+  }
+  /* quick toggle to hide all copy if needed */
+  body.no-copy .copy{display:none!important}
 
-    body{
-      font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
-      min-height:100vh;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      background: linear-gradient(135deg,var(--apricot) 0%,var(--melon) 25%,var(--light-coral) 50%,var(--mauve) 75%,var(--davy) 100%);
-      overflow:auto;
-      padding:40px;
-    }
+  .artboard{display:flex;gap:32px;flex-wrap:wrap;align-items:flex-start;justify-content:center}
 
-    /* Lay out the three phones side by side (wrap on small screens) */
-    .artboard{
-      display:flex;
-      gap:32px;
-      flex-wrap:wrap;
-      align-items:flex-start;
-      justify-content:center;
-    }
+  /* Phone shell */
+  .phone{
+    width:375px;height:812px;background:#000;border-radius:40px;padding:8px;
+    box-shadow:0 20px 60px rgba(0,0,0,.3);position:relative
+  }
+  .screen{
+    width:100%;height:100%;border-radius:32px;overflow:hidden;position:relative;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    padding:60px 40px
+  }
 
-    /* Phone shell */
-    .phone{
-      width:375px;
-      height:812px;
-      background:#000;
-      border-radius:40px;
-      padding:8px;
-      box-shadow:0 20px 60px rgba(0,0,0,.3);
-      position:relative;
-    }
+  /* Screen gradients */
+  .login   {background:linear-gradient(145deg,var(--navy),  var(--blue1))}
+  .signup  {background:linear-gradient(145deg,var(--blue1),var(--blue2))}
+  .dash    {background:linear-gradient(145deg,var(--blue2),var(--blue1))}
+  .reset   {background:linear-gradient(145deg,var(--blue1),var(--blue3))}
+  .profile {background:linear-gradient(145deg,var(--blue2),var(--blue3))}
 
-    /* Screen */
-    .screen{
-      width:100%;
-      height:100%;
-      border-radius:32px;
-      overflow:hidden;
-      position:relative;
-      display:flex;
-      flex-direction:column;
-      justify-content:center;
-      align-items:center;
-      padding:60px 40px;
-    }
+  /* Frosted tiles */
+  .tile{
+    width:84px;height:84px;border-radius:24px;margin-bottom:20px;
+    display:flex;align-items:center;justify-content:center;
+    background:rgba(255,255,255,.18);backdrop-filter:blur(20px);
+    border:1px solid rgba(255,255,255,.28);box-shadow:0 8px 32px rgba(0,0,0,.12)
+  }
+  .tile.lg{width:120px;height:120px;border-radius:32px;margin-bottom:16px}
+  .tile svg{width:42px;height:42px;fill:var(--navy)}
 
-    /* Per-screen gradients (kept from your originals) */
-    .login-screen{  background:linear-gradient(145deg,var(--apricot),var(--melon)); }
-    .signup-screen{ background:linear-gradient(145deg,var(--melon),var(--light-coral));}
-    .home-screen{   background:linear-gradient(145deg,var(--light-coral),var(--mauve)); }
+  /* Copy styles */
+  .title.copy{
+    font-size:24px;font-weight:800;color:var(--navy);text-align:center;margin-bottom:4px
+  }
+  .sub.copy{
+    font-size:14px;color:var(--muted);text-align:center;margin-bottom:24px;line-height:1.3
+  }
 
-    /* Frosted icon tile */
-    .tile{
-      width:80px;height:80px;border-radius:24px;
-      display:flex;align-items:center;justify-content:center;
-      margin-bottom:40px;
-      background:rgba(255,255,255,.2);
-      backdrop-filter:blur(20px);
-      border:1px solid rgba(255,255,255,.3);
-      box-shadow:0 8px 32px rgba(0,0,0,.1);
-    }
-    .tile svg{width:40px;height:40px;fill:var(--davy)}
+  /* Form */
+  .form{width:100%;max-width:280px}
+  .group{position:relative;margin-bottom:16px}
+  .icon{
+    position:absolute;left:16px;top:50%;transform:translateY(-50%);
+    width:20px;height:20px;z-index:1;opacity:.8
+  }
+  .icon svg{width:100%;height:100%;fill:var(--navy)}
+  input{
+    width:100%;padding:16px 16px 16px 48px;border:none;border-radius:16px;
+    background:rgba(255,255,255,.94);backdrop-filter:blur(20px);
+    color:var(--navy);outline:none;transition:.25s ease box-shadow;font-size:16px
+  }
+  input::placeholder{color:#7d8aa3}
+  input:focus{box-shadow:0 0 0 2px rgba(3,37,76,.18),0 8px 24px rgba(0,0,0,.08)}
 
-    /* Form blocks */
-    .form{width:100%;max-width:280px}
-    .group{position:relative;margin-bottom:24px}
-    .i{
-      position:absolute;left:16px;top:50%;transform:translateY(-50%);
-      width:20px;height:20px;z-index:1
-    }
-    .i svg{width:100%;height:100%;fill:var(--davy);opacity:.6}
+  /* Buttons */
+  .btn{
+    width:100%;padding:14px 16px;border:none;border-radius:16px;background:var(--navy);
+    display:flex;align-items:center;justify-content:center;gap:10px;cursor:pointer;
+    transition:transform .15s ease, box-shadow .2s ease;margin-top:8px;color:#fff;font-weight:700
+  }
+  .btn:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(3,37,76,.35)}
+  .btn:active{transform:translateY(0)}
+  .btn svg{width:20px;height:20px;fill:#fff}
+  .ghost{background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.3);color:var(--navy)}
+  .ghost svg{fill:var(--navy)}
 
-    input{
-      width:100%;padding:16px 16px 16px 48px;border:none;border-radius:16px;
-      background:rgba(255,255,255,.9);backdrop-filter:blur(20px);
-      font-size:16px;color:var(--davy);outline:none;transition:.3s ease all;
-    }
-    input:focus{background:#fff;box-shadow:0 0 0 2px rgba(88,84,95,.2)}
+  /* Dots */
+  .dots{position:absolute;bottom:30px;left:50%;transform:translateX(-50%);display:flex;gap:8px}
+  .dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.3)}
+  .dot.active{background:rgba(255,255,255,.85);transform:scale(1.2)}
 
-    /* Buttons (icon-only) */
-    .btn{
-      width:100%;padding:16px;border:none;border-radius:16px;
-      background:var(--davy);color:#fff;font-size:0; /* hide text if any */
-      cursor:pointer;transition:.3s ease all;margin-top:8px;
-      display:flex;align-items:center;justify-content:center;gap:8px;
-    }
-    .btn:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(88,84,95,.3)}
-    .btn:active{transform:translateY(0)}
-    .btn svg{width:20px;height:20px;fill:#fff}
+  /* Dashboard bits */
+  .header{
+    position:absolute;top:0;left:0;right:0;padding:20px 24px 96px;
+    background:linear-gradient(145deg,var(--navy),var(--blue2));color:#fff
+  }
+  .header .row{display:flex;justify-content:space-between;align-items:center}
+  .chip{
+    width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+    background:rgba(255,255,255,.2)
+  }
+  .stat-wrap{display:flex;gap:16px;margin-top:16px}
+  .stat{
+    flex:1;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.25);
+    border-radius:16px;padding:16px;text-align:center;backdrop-filter:blur(8px)
+  }
+  .main{position:absolute;inset:0;top:156px;padding:16px 24px 120px;overflow:auto}
+  .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-bottom:16px}
+  .card{
+    background:linear-gradient(145deg,#f8fbff,#e6f3ff);border-radius:18px;padding:22px 18px;
+    display:flex;align-items:center;justify-content:center;border:2px solid transparent;
+    transition:.2s ease;min-height:84px
+  }
+  .card:hover{border-color:var(--blue1);transform:translateY(-3px)}
+  .round{
+    width:56px;height:56px;border-radius:50%;
+    background:linear-gradient(145deg,var(--blue1),var(--blue3));
+    display:flex;align-items:center;justify-content:center
+  }
+  .round svg{width:28px;height:28px;fill:#fff}
 
-    .ghost{
-      background:rgba(255,255,255,.2);color:var(--davy);border:1px solid rgba(255,255,255,.3);
-      font-size:0;
-    }
-    .ghost svg{fill:currentColor}
+  .list{background:#f4f9ff;border-radius:16px;overflow:hidden;border:1px solid #e3f1ff}
+  .item{display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid #e3f1ff}
+  .item:last-child{border-bottom:none}
+  .bubble{
+    width:40px;height:40px;border-radius:50%;
+    background:linear-gradient(145deg,var(--blue1),var(--blue3));
+    display:flex;align-items:center;justify-content:center;color:#fff
+  }
 
-    /* Dots */
-    .dots{position:absolute;bottom:30px;left:50%;transform:translateX(-50%);display:flex;gap:8px}
-    .dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.3)}
-    .dot.active{background:rgba(255,255,255,.8);transform:scale(1.2)}
+  .section-title.copy{font-size:16px;font-weight:800;color:var(--navy);margin:10px 0 8px}
 
-    /* Home big tile */
-    .welcome{width:120px;height:120px;border-radius:32px;margin-bottom:32px}
-    .welcome svg{width:60px;height:60px}
+  /* Reset */
+  .steps{display:flex;gap:12px;margin:10px 0 18px}
+  .step{width:12px;height:12px;border-radius:50%;background:#e5e7eb}
+  .step.active{background:linear-gradient(135deg,var(--blue1),var(--blue3));transform:scale(1.2)}
+  .code{display:flex;gap:12px;justify-content:center;margin:8px 0 12px}
+  .digit{
+    width:48px;height:56px;border:2px solid #e5e7eb;border-radius:12px;text-align:center;
+    font-size:22px;font-weight:800;background:#fff;color:var(--navy)
+  }
 
-    .actions{width:100%;display:flex;flex-direction:column;gap:16px}
-    .action{
-      display:flex;align-items:center;justify-content:center;gap:12px;
-      padding:16px 24px;border-radius:16px;cursor:pointer;text-decoration:none;
-      background:rgba(255,255,255,.2);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.3);color:var(--davy);
-      transition:.3s ease all;font-size:0; /* icon-only */
-    }
-    .action:hover{background:rgba(255,255,255,.3);transform:translateY(-2px);box-shadow:0 8px 25px rgba(0,0,0,.1)}
-    .action svg{width:24px;height:24px;fill:currentColor}
-    .logout{background:rgba(88,84,95,.8);color:#fff;border:none}
-    .logout:hover{background:rgba(88,84,95,.9)}
+  /* Profile */
+  .p-head{
+    position:absolute;top:0;left:0;right:0;padding:24px 24px 120px;
+    background:linear-gradient(145deg,var(--blue1),var(--blue3));color:#fff;text-align:center
+  }
+  .p-row{display:flex;justify-content:space-between;align-items:center}
+  .avatar{
+    width:104px;height:104px;border-radius:50%;margin:16px auto 8px;
+    background:rgba(255,255,255,.18);border:4px solid rgba(255,255,255,.35);
+    display:flex;align-items:center;justify-content:center;position:relative
+  }
+  .avatar .cam{
+    position:absolute;right:-2px;bottom:-2px;width:32px;height:32px;border-radius:50%;
+    background:#10b981;border:3px solid #fff;display:flex;align-items:center;justify-content:center
+  }
+  .p-tag.copy{font-size:13px;color:#e6f2ff}
 
-    /* Modal (kept, but textless) */
-    .modal{
-      position:fixed;inset:0;background:rgba(0,0,0,.8);display:none;align-items:center;justify-content:center;z-index:1000;
-    }
-    .modal-card{
-      background:linear-gradient(145deg,var(--apricot),var(--melon));
-      padding:40px;border-radius:24px;text-align:center;color:var(--davy);max-width:300px;width:90%;
-    }
-    .close{
-      margin-top:24px;padding:12px 24px;background:var(--davy);color:#fff;border:none;border-radius:12px;cursor:pointer;font-size:0;
-      display:inline-flex;align-items:center;justify-content:center;
-    }
-    .close svg{width:18px;height:18px;fill:#fff}
-  </style>
+  .p-main{position:absolute;inset:0;top:188px;padding:20px 24px 120px;overflow:auto}
+  .p-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:14px}
+  .p-stat{background:#f1f7ff;border:2px solid #e0efff;border-radius:16px;height:72px}
+
+  .menu{background:#fff;border:1px solid #eef5ff;border-radius:16px;overflow:hidden;margin-bottom:16px}
+  .row{display:flex;align-items:center;padding:16px;border-bottom:1px solid #eef5ff}
+  .row:last-child{border-bottom:none}
+  .mi{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+      background:linear-gradient(145deg,var(--blue1),var(--blue3));margin-right:14px}
+  .mi.warn{background:linear-gradient(145deg,#f59e0b,#f97316)}
+  .arrow{margin-left:auto;width:22px;height:22px;opacity:.55}
+  .toggle{width:52px;height:28px;border-radius:14px;background:#e5e7eb;position:relative;margin-left:auto}
+  .toggle .knob{position:absolute;top:2px;left:2px;width:24px;height:24px;border-radius:50%;background:#fff;transition:.2s}
+  .toggle.on{background:var(--blue1)}
+  .toggle.on .knob{left:26px}
+  .logout{
+    width:100%;padding:14px;border-radius:16px;border:none;
+    background:linear-gradient(135deg,#ef4444,#dc2626);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800
+  }
+  .logout svg{width:22px;height:22px;fill:#fff;margin-right:6px}
+
+  .bottom{
+    position:absolute;left:50%;transform:translateX(-50%);bottom:20px;width:calc(100% - 48px);
+    background:#fff;border:1px solid #e6eef9;border-radius:16px;padding:12px 14px;
+    box-shadow:0 -8px 28px rgba(0,0,0,.08)
+  }
+  .tabs{display:flex;justify-content:space-around}
+  .tab{display:flex;flex-direction:column;align-items:center;gap:4px;padding:6px 8px;border-radius:12px}
+  .tab.active{background:rgba(17,103,177,.12)}
+  .tab .ico{width:20px;height:20px}
+
+  @media(max-width:420px){
+    body{padding:0}
+    .phone{width:100vw;height:100vh;border-radius:0;padding:0}
+    .screen{border-radius:0}
+  }
+</style>
 </head>
 <body>
   <div class="artboard">
 
     <!-- ===== LOGIN ===== -->
     <div class="phone">
-      <div class="screen login-screen">
+      <div class="screen login">
         <div class="tile" aria-hidden="true">
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M12 2c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2Zm9 7V7L15 5.5V9c0 1.1-.9 2-2 2h-2c-1.1 0-2-.9-2-2V5.5L3 7v2H0v2h3v9c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-9h3V9h-3ZM19 20H5v-9h2v2h2v-2h6v2h2v-2h2v9Z"/>
-          </svg>
+          <svg viewBox="0 0 24 24"><path d="M12 2a2 2 0 1 1 0 4 2 2 0 0 1 0-4Zm9 7V7l-6-1.5V9a2 2 0 0 1-2 2h-2a2 2 0 0 1-2-2V5.5L3 7v2H0v2h3v9a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-9h3V9h-3ZM19 20H5v-9h2v2h2v-2h6v2h2v-2h2v9Z"/></svg>
         </div>
+        <div class="title copy">Sign In</div>
+        <div class="sub copy">Welcome back — secure login</div>
 
         <div class="form">
           <div class="group">
-            <div class="i" aria-hidden="true">
-              <svg viewBox="0 0 24 24"><path d="M12 4a4 4 0 1 1 0 8 4 4 0 0 1 0-8m0 10c4.42 0 8 1.79 8 4v2H4v-2c0-2.21 3.58-4 8-4Z"/></svg>
-            </div>
-            <input type="text" aria-label="Username"/>
+            <div class="icon"><svg viewBox="0 0 24 24"><path d="M12 4a4 4 0 1 1 0 8 4 4 0 0 1 0-8m0 10c4.4 0 8 1.8 8 4v2H4v-2c0-2.2 3.6-4 8-4Z"/></svg></div>
+            <input type="text" placeholder="Username or Email"/>
           </div>
-
           <div class="group">
-            <div class="i" aria-hidden="true">
-              <svg viewBox="0 0 24 24"><path d="M12 17a2 2 0 1 0 0-4 2 2 0 0 0 0 4m6-9a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V10c0-1.11.9-2 2-2h1V6a5 5 0 0 1 10 0v2h1M12 3a3 3 0 0 0-3 3v2h6V6a3 3 0 0 0-3-3Z"/></svg>
-            </div>
-            <input type="password" aria-label="Password"/>
+            <div class="icon"><svg viewBox="0 0 24 24"><path d="M12 17a2 2 0 1 0 0-4 2 2 0 0 0 0 4m6-9a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V10c0-1.1.9-2 2-2h1V6a5 5 0 0 1 10 0v2h1M12 3a3 3 0 0 0-3 3v2h6V6a3 3 0 0 0-3-3Z"/></svg></div>
+            <input type="password" placeholder="Password"/>
           </div>
-
-          <button class="btn" type="button" aria-label="Login">
-            <svg viewBox="0 0 24 24"><path d="M19 7v4H5.83l3.58-3.59L8 6 2 12l6 6 1.41-1.41L5.83 13H19v4l2-2V7a2 2 0 0 0-2-2H7A2 2 0 0 0 5 7v2h2V7h12Z"/></svg>
-          </button>
-
-          <button class="btn ghost" type="button" aria-label="Go to Sign Up">
-            <svg viewBox="0 0 24 24"><path d="M19 13H13v6h-2v-6H5v-2h6V5h2v6h6v2Z"/></svg>
-          </button>
+          <button class="btn"><svg viewBox="0 0 24 24"><path d="M19 7v4H5.8l3.6-3.6L8 6 2 12l6 6 1.4-1.4L5.8 13H19v4l2-2V7a2 2 0 0 0-2-2H7A2 2 0 0 0 5 7v2h2V7h12Z"/></svg> Sign In</button>
+          <button class="btn ghost"><svg viewBox="0 0 24 24"><path d="M19 13H13v6h-2v-6H5v-2h6V5h2v6h6v2Z"/></svg> Create Account</button>
         </div>
 
-        <div class="dots" aria-hidden="true">
-          <div class="dot active"></div><div class="dot"></div><div class="dot"></div>
-        </div>
+        <div class="dots"><div class="dot active"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
       </div>
     </div>
 
     <!-- ===== SIGN UP ===== -->
     <div class="phone">
-      <div class="screen signup-screen">
+      <div class="screen signup">
         <div class="tile" aria-hidden="true">
-          <svg viewBox="0 0 24 24">
-            <path d="M15 4a4 4 0 0 0-4 4 4 4 0 0 0 8 0 4 4 0 0 0-4-4m0 9c-2.67 0-8 1.33-8 4v3h16v-3c0-2.67-5.33-4-8-4M4 7v3H1v2h3v3h2v-3h3V10H6V7H4Z"/>
-          </svg>
+          <svg viewBox="0 0 24 24"><path d="M15 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8m0 9c-2.7 0-8 1.3-8 4v3h16v-3c0-2.7-5.3-4-8-4M4 7v3H1v2h3v3h2v-3h3v-2H6V7H4Z"/></svg>
         </div>
+        <div class="title copy">Create Account</div>
+        <div class="sub copy">Join and get started in minutes</div>
 
         <div class="form">
-          <div class="group">
-            <div class="i" aria-hidden="true">
-              <svg viewBox="0 0 24 24"><path d="M12 4a4 4 0 1 1 0 8 4 4 0 0 1 0-8m0 10c4.42 0 8 1.79 8 4v2H4v-2c0-2.21 3.58-4 8-4Z"/></svg>
-            </div>
-            <input type="text" aria-label="Username"/>
-          </div>
-
-          <div class="group">
-            <div class="i" aria-hidden="true">
-              <svg viewBox="0 0 24 24"><path d="M20 8 12 13 4 8V6l8 5 8-5m0-2H4A2 2 0 0 0 2 6v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2Z"/></svg>
-            </div>
-            <input type="email" aria-label="Email"/>
-          </div>
-
-          <div class="group">
-            <div class="i" aria-hidden="true">
-              <svg viewBox="0 0 24 24"><path d="M12 17a2 2 0 1 0 0-4 2 2 0 0 0 0 4m6-9a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V10c0-1.11.9-2 2-2h1V6a5 5 0 0 1 10 0v2h1M12 3a3 3 0 0 0-3 3v2h6V6a3 3 0 0 0-3-3Z"/></svg>
-            </div>
-            <input type="password" aria-label="Password"/>
-          </div>
-
-          <button class="btn" type="button" aria-label="Sign Up">
-            <svg viewBox="0 0 24 24"><path d="M19 13H13v6h-2v-6H5v-2h6V5h2v6h6v2Z"/></svg>
-          </button>
-
-          <button class="btn ghost" type="button" aria-label="Go to Login">
-            <svg viewBox="0 0 24 24"><path d="M19 7v4H5.83l3.58-3.59L8 6 2 12l6 6 1.41-1.41L5.83 13H19v4l2-2V7a2 2 0 0 0-2-2H7A2 2 0 0 0 5 7v2h2V7h12Z"/></svg>
-          </button>
+          <div class="group"><div class="icon"><svg viewBox="0 0 24 24"><path d="M12 4a4 4 0 1 1 0 8 4 4 0 0 1 0-8m0 10c4.4 0 8 1.8 8 4v2H4v-2c0-2.2 3.6-4 8-4Z"/></svg></div><input type="text" placeholder="Full name"/></div>
+          <div class="group"><div class="icon"><svg viewBox="0 0 24 24"><path d="M20 8 12 13 4 8V6l8 5 8-5m0-2H4A2 2 0 0 0 2 6v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2Z"/></svg></div><input type="email" placeholder="Email address"/></div>
+          <div class="group"><div class="icon"><svg viewBox="0 0 24 24"><path d="M12 17a2 2 0 1 0 0-4 2 2 0 0 0 0 4m6-9a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V10c0-1.1.9-2 2-2h1V6a5 5 0 0 1 10 0v2h1"/></svg></div><input type="password" placeholder="Create password"/></div>
+          <button class="btn"><svg viewBox="0 0 24 24"><path d="M19 13H13v6h-2v-6H5v-2h6V5h2v6h6v2Z"/></svg> Sign Up</button>
+          <button class="btn ghost"><svg viewBox="0 0 24 24"><path d="M19 7v4H5.8l3.6-3.6L8 6 2 12l6 6 1.4-1.4L5.8 13H19v4l2-2V7a2 2 0 0 0-2-2H7A2 2 0 0 0 5 7v2h2V7h12Z"/></svg> Back to Login</button>
         </div>
 
-        <div class="dots" aria-hidden="true">
-          <div class="dot"></div><div class="dot active"></div><div class="dot"></div>
-        </div>
+        <div class="dots"><div class="dot"></div><div class="dot active"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
       </div>
     </div>
 
-    <!-- ===== HOME ===== -->
+    <!-- ===== DASHBOARD (HOME) ===== -->
     <div class="phone">
-      <div class="screen home-screen">
-        <div class="tile welcome" aria-hidden="true">
-          <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8h5Z"/></svg>
+      <div class="screen dash">
+        <div class="header">
+          <div class="row">
+            <div class="chip"><svg viewBox="0 0 24 24" width="24" height="24"><path fill="#fff" d="M3 13h2v-2H3V7l9-4 9 4v4h-2v2h2v8h-8v-6H11v6H3v-8Z"/></svg></div>
+            <div class="chip"><svg viewBox="0 0 24 24" width="24" height="24"><path fill="#fff" d="M12 4a4 4 0 1 1 0 8 4 4 0 0 1 0-8m0 10c4.4 0 8 1.8 8 4v2H4v-2c0-2.2 3.6-4 8-4Z"/></svg></div>
+          </div>
+          <div class="sub copy" style="color:#e6f2ff;margin:12px 0 0">Welcome Home</div>
+          <div class="stat-wrap">
+            <div class="stat"></div><div class="stat"></div>
+          </div>
         </div>
 
-        <div class="actions">
-          <button class="action" type="button" aria-label="View Profile" onclick="openModal()">
-            <svg viewBox="0 0 24 24"><path d="M12 4a4 4 0 1 1 0 8 4 4 0 0 1 0-8m0 10c4.42 0 8 1.79 8 4v2H4v-2c0-2.21 3.58-4 8-4Z"/></svg>
-          </button>
+        <div class="main">
+          <div class="section-title copy">Quick Actions</div>
+          <div class="grid">
+            <div class="card"><div class="round"><svg viewBox="0 0 24 24"><path d="M5 12h14v2H5zM5 7h14v2H5zM5 17h14v2H5z"/></svg></div></div>
+            <div class="card"><div class="round"><svg viewBox="0 0 24 24"><path d="M3 3h18v4H3zM3 10h18v4H3zM3 17h18v4H3z"/></svg></div></div>
+            <div class="card"><div class="round"><svg viewBox="0 0 24 24"><path d="M7 3h10v2H7zM4 7h16v2H4zM4 11h16v2H4zM4 15h16v2H4z"/></svg></div></div>
+            <div class="card"><div class="round"><svg viewBox="0 0 24 24"><path d="M17 3H7a2 2 0 0 0-2 2v16l7-3 7 3V5a2 2 0 0 0-2-2Z"/></svg></div></div>
+          </div>
 
-          <button class="action" type="button" aria-label="Settings">
-            <svg viewBox="0 0 24 24"><path d="M12 8a4 4 0 1 1 0 8 4 4 0 0 1 0-8m8.94 3h-2.02a6.94 6.94 0 0 0-.5-1.2l1.44-1.44-1.41-1.41-1.44 1.44c-.37-.2-.77-.36-1.18-.47V4.06h-2v2.02c-.41.11-.81.27-1.18.47L9.2 5.11 7.79 6.52l1.44 1.44c-.2.37-.36.77-.47 1.18H6.94v2h2.02c.11.41.27.81.47 1.18L8 14.76l1.41 1.41 1.44-1.44c.37.2.77.36 1.18.47v2.02h2v-2.02c.41-.11.81-.27 1.18-.47l1.44 1.44 1.41-1.41-1.44-1.44c.2-.37.36-.77.47-1.18h2.02v-2Z"/></svg>
-          </button>
-
-          <button class="action logout" type="button" aria-label="Logout">
-            <svg viewBox="0 0 24 24"><path d="M14.08 15.59 16.67 13H7v-2h9.67l-2.59-2.59L15.5 7l5 5-5 5-1.42-1.41ZM3 19h8v2H3a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8v2H3v14Z"/></svg>
-          </button>
+          <div class="section-title copy">Recent Activity</div>
+          <div class="list">
+            <div class="item"><div class="bubble">📤</div><div class="copy" style="font-size:14px;color:var(--navy)">Sent Payment</div><div style="flex:1"></div><div class="bubble" style="background:linear-gradient(145deg,#10b981,#059669)">✓</div></div>
+            <div class="item"><div class="bubble">💡</div><div class="copy" style="font-size:14px;color:var(--navy)">Bill Paid</div><div style="flex:1"></div><div class="bubble">₱</div></div>
+            <div class="item"><div class="bubble">📱</div><div class="copy" style="font-size:14px;color:var(--navy)">Mobile Load</div><div style="flex:1"></div><div class="bubble">+</div></div>
+            <div class="item"><div class="bubble">💰</div><div class="copy" style="font-size:14px;color:var(--navy)">Received</div><div style="flex:1"></div><div class="bubble" style="background:linear-gradient(145deg,#10b981,#059669)">+</div></div>
+          </div>
         </div>
 
-        <div class="dots" aria-hidden="true">
-          <div class="dot"></div><div class="dot"></div><div class="dot active"></div>
+        <div class="bottom">
+          <div class="tabs">
+            <div class="tab active"><svg class="ico" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg><div class="copy" style="font-size:10px">Home</div></div>
+            <div class="tab"><svg class="ico" viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20z"/></svg><div class="copy" style="font-size:10px">Scan</div></div>
+            <div class="tab"><svg class="ico" viewBox="0 0 24 24"><path d="M3 13h18v8H3z"/></svg><div class="copy" style="font-size:10px">Pay</div></div>
+            <div class="tab"><svg class="ico" viewBox="0 0 24 24"><path d="M12 17.27 18.18 21l-1.63-7L22 9.24l-7-.61L12 2 9 8.63l-7 .61L7.45 14 5.82 21z"/></svg><div class="copy" style="font-size:10px">Rewards</div></div>
+            <div class="tab"><svg class="ico" viewBox="0 0 24 24"><path d="M12 12a5 5 0 1 0 0-10 5 5 0 0 0 0 10Zm0 2c-4.4 0-8 1.8-8 4v2h16v-2c0-2.2-3.6-4-8-4Z"/></svg><div class="copy" style="font-size:10px">Profile</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== RESET (code entry) ===== -->
+    <div class="phone">
+      <div class="screen reset">
+        <div class="tile lg"><svg viewBox="0 0 24 24"><path d="M12 1 8 5h3v6h2V5h3l-4-4Zm7 7a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V10c0-1.1.9-2 2-2h1V6a5 5 0 0 1 10 0v2h1Z"/></svg></div>
+        <div class="title copy">Enter Code</div>
+        <div class="sub copy">We sent a 6-digit verification code</div>
+        <div class="form" style="max-width:260px">
+          <div class="code">
+            <input class="digit" maxlength="1"/><input class="digit" maxlength="1"/>
+            <input class="digit" maxlength="1"/><input class="digit" maxlength="1"/>
+            <input class="digit" maxlength="1"/><input class="digit" maxlength="1"/>
+          </div>
+          <button class="btn"><svg viewBox="0 0 24 24"><path d="M9 16.17 4.83 12 3.41 13.41l5.59 5.59L21 7.59 19.59 6z"/></svg> Verify</button>
+          <button class="btn ghost"><svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4 4 12l8 8 1.41-1.41L7.83 13H20z"/></svg> Back</button>
+        </div>
+        <div class="dots"><div class="dot"></div><div class="dot active"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+      </div>
+    </div>
+
+    <!-- ===== PROFILE ===== -->
+    <div class="phone">
+      <div class="screen profile">
+        <div class="p-head">
+          <div class="p-row">
+            <div class="chip"><svg viewBox="0 0 24 24" width="22" height="22"><path fill="#fff" d="M10 6H4v12h16V6h-6V4h8v16H2V4h8v2z"/></svg></div>
+            <div class="chip"><svg viewBox="0 0 24 24" width="22" height="22"><path fill="#fff" d="M12 4a4 4 0 1 1 0 8 4 4 0 0 1 0-8Z"/></svg></div>
+          </div>
+          <div class="avatar">
+            <svg viewBox="0 0 24 24" width="54" height="54"><path fill="var(--navy)" d="M12 4a4 4 0 1 1 0 8 4 4 0 0 1 0-8m0 10c4.4 0 8 1.8 8 4v2H4v-2c0-2.2 3.6-4 8-4Z"/></svg>
+            <div class="cam"><svg viewBox="0 0 24 24" width="16" height="16"><path fill="#fff" d="M9 7h2l1-1h2l1 1h2v10H7V7h2z"/></svg></div>
+          </div>
+          <div class="p-tag copy">Verified Account</div>
+        </div>
+
+        <div class="p-main">
+          <div class="section-title copy">Your Stats</div>
+          <div class="p-stats"><div class="p-stat"></div><div class="p-stat"></div><div class="p-stat"></div></div>
+
+          <div class="section-title copy">Account</div>
+          <div class="menu">
+            <div class="row"><div class="mi">👤</div><div class="copy" style="font-size:14px">Personal Info</div><div class="arrow"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></div></div>
+            <div class="row"><div class="mi">💳</div><div class="copy" style="font-size:14px">Cards & Banks</div><div class="arrow"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></div></div>
+            <div class="row"><div class="mi">🔐</div><div class="copy" style="font-size:14px">Security</div><div class="arrow"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></div></div>
+          </div>
+
+          <div class="section-title copy">App Settings</div>
+          <div class="menu">
+            <div class="row"><div class="mi">🔔</div><div class="copy" style="font-size:14px">Push Notifications</div><div class="toggle on"><div class="knob"></div></div></div>
+            <div class="row"><div class="mi">📱</div><div class="copy" style="font-size:14px">SMS Notifications</div><div class="toggle"><div class="knob"></div></div></div>
+            <div class="row"><div class="mi">🌙</div><div class="copy" style="font-size:14px">Dark Mode</div><div class="toggle"><div class="knob"></div></div></div>
+          </div>
+
+          <div class="section-title copy">Support</div>
+          <div class="menu">
+            <div class="row"><div class="mi">❓</div><div class="copy" style="font-size:14px">Help Center</div><div class="arrow"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></div></div>
+            <div class="row"><div class="mi">💬</div><div class="copy" style="font-size:14px">Contact Support</div><div class="arrow"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></div></div>
+            <div class="row"><div class="mi">📤</div><div class="copy" style="font-size:14px">Share App</div><div class="arrow"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></div></div>
+          </div>
+
+          <div class="section-title copy">Legal</div>
+          <div class="menu">
+            <div class="row"><div class="mi warn">📋</div><div class="copy" style="font-size:14px">Terms of Service</div><div class="arrow"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></div></div>
+            <div class="row"><div class="mi warn">🔒</div><div class="copy" style="font-size:14px">Privacy Policy</div><div class="arrow"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></div></div>
+          </div>
+
+          <button class="logout"><svg viewBox="0 0 24 24"><path d="M14.1 15.6 16.7 13H7v-2h9.7l-2.6-2.6L15.5 7l5 5-5 5-1.4-1.4ZM3 19h8v2H3a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8v2H3v14Z"/></svg> Sign Out</button>
+        </div>
+
+        <div class="bottom">
+          <div class="tabs">
+            <div class="tab"><svg class="ico" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg><div class="copy" style="font-size:10px">Home</div></div>
+            <div class="tab"><svg class="ico" viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20z"/></svg><div class="copy" style="font-size:10px">Scan</div></div>
+            <div class="tab"><svg class="ico" viewBox="0 0 24 24"><path d="M3 13h18v8H3z"/></svg><div class="copy" style="font-size:10px">Pay</div></div>
+            <div class="tab"><svg class="ico" viewBox="0 0 24 24"><path d="M12 17.27 18.18 21l-1.63-7L22 9.24l-7-.61L12 2 9 8.63l-7 .61L7.45 14 5.82 21z"/></svg><div class="copy" style="font-size:10px">Rewards</div></div>
+            <div class="tab active"><svg class="ico" viewBox="0 0 24 24"><path d="M12 12a5 5 0 1 0 0-10 5 5 0 0 0 0 10Zm0 2c-4.4 0-8 1.8-8 4v2h16v-2c0-2.2-3.6-4-8-4Z"/></svg><div class="copy" style="font-size:10px">Profile</div></div>
+          </div>
         </div>
       </div>
     </div>
 
   </div>
 
-  <!-- Textless modal (for the Home screen “profile” action) -->
-  <div class="modal" id="profileModal" aria-hidden="true">
-    <div class="modal-card">
-      <!-- purely decorative circle avatar -->
-      <div class="tile" style="margin:0 auto 16px;width:96px;height:96px;border-radius:50%;">
-        <svg viewBox="0 0 24 24"><path d="M12 4a4 4 0 1 1 0 8 4 4 0 0 1 0-8m0 10c4.42 0 8 1.79 8 4v2H4v-2c0-2.21 3.58-4 8-4Z"/></svg>
-      </div>
-      <button class="close" type="button" aria-label="Close" onclick="closeModal()">
-        <svg viewBox="0 0 24 24"><path d="m19 6-1-1-6 6-6-6-1 1 6 6-6 6 1 1 6-6 6 6 1-1-6-6 6-6Z"/></svg>
-      </button>
-    </div>
-  </div>
-
-  <script>
-    /* Minimal helpers; no alerts, no navigation – design only */
-    function openModal(){ document.getElementById('profileModal').style.display='flex'; }
-    function closeModal(){ document.getElementById('profileModal').style.display='none'; }
-  </script>
+<script>
+  // decorative toggles
+  document.querySelectorAll('.toggle').forEach(t=>t.addEventListener('click',()=>t.classList.toggle('on')));
+  // auto-advance code boxes
+  document.querySelectorAll('.digit').forEach((d,i,arr)=>{
+    d.addEventListener('input',e=>{ if(e.target.value && arr[i+1]) arr[i+1].focus(); });
+  });
+</script>
 </body>
 </html>
